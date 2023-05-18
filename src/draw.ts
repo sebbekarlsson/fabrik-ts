@@ -52,3 +52,23 @@ export const drawText = (
 
   ctx.restore();
 };
+
+export const drawCross = (
+  ctx: CanvasRenderingContext2D,
+  material: IMaterial,
+  pos: Vector,
+  length: number = 100
+) => {
+  drawLine(
+    ctx,
+    material,
+    pos.add(VEC(-length / 2, 0, 0)),
+    pos.add(VEC(length / 2, 0, 0))
+  );
+  drawLine(
+    ctx,
+    material,
+    pos.add(VEC(0, -length / 2, 0)),
+    pos.add(VEC(0, length / 2, 0))
+  );
+};

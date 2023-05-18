@@ -5,7 +5,7 @@ import { createArmSkeleton, ISkeleton, IBone, IJoint } from "./skeleton";
 import { fabrik } from "./fabrik";
 import { COLORS } from "./colors";
 import { Vector, VEC } from "./vector";
-import { drawLine, drawText } from "./draw";
+import { drawLine, drawText, drawCross } from "./draw";
 
 let armSkeleton: ISkeleton | null = null;
 
@@ -46,16 +46,24 @@ const app = setupApp("canvas", {
   },
   draw: (app: IApp) => {
     if (!armSkeleton) return;
+
+    // 1. Draw skeleton
+    drawSkeleton(app, armSkeleton);
+
     const mouse = app.mouse;
+    const mousePos = mouse.position;
     const minViewport = app.minViewport();
     const maxViewport = app.maxViewport();
-
     const dx = minViewport.x / maxViewport.x;
     const dy = minViewport.y / maxViewport.y;
 
-    const fontSize = 24.0 * dx;
+    // 2. Draw mouse cross
+    drawCross(app.canvas.ctx, { lineWidth: 2 }, mousePos, dx * 64);
 
+    // 3. Draw help text
     if (!mouse.pressed) {
+      const fontSize = 24.0 * dx;
+
       drawText(
         app.canvas.ctx,
         { fontSize: fontSize, color: "#c8d6e5" },
@@ -63,7 +71,5 @@ const app = setupApp("canvas", {
         VEC(dx * 8 * 2, dy * 16 * 2, 0)
       );
     }
-
-    drawSkeleton(app, armSkeleton);
   },
 })();
