@@ -1,15 +1,15 @@
-# 🚀 Welcome to your new awesome project!
+# FABRIK algorithm in Typescript 
 
-This project has been created using **webpack-cli**, you can now run
+## References
+> Below are some links to papers, research, information or other implementations:
+* [http://www.cs.sjsu.edu/faculty/pollett/masters/Semesters/Spring18/ujjawal/FABRIK-Presentation.pdf](http://www.cs.sjsu.edu/faculty/pollett/masters/Semesters/Spring18/ujjawal/FABRIK-Presentation.pdf)
+* [http://www.andreasaristidou.com/publications/papers/FABRIK.pdf](http://www.andreasaristidou.com/publications/papers/FABRIK.pdf)
+* [http://www.andreasaristidou.com/FABRIK.html](http://www.andreasaristidou.com/FABRIK.html)
+* [https://sean.cm/a/fabrik-algorithm-2d](https://sean.cm/a/fabrik-algorithm-2d)
 
+## Demo
+> To view the demo:
 ```
-npm run build
+yarn serve
 ```
-
-or
-
-```
-yarn build
-```
-
-to bundle your application
+> Your browser will open.
