@@ -40,7 +40,7 @@ export const drawText = (
 ) => {
   const color = material.color || "#FFFFFF";
   const font = material.font || "Sans-Serif";
-  const fontSize = material.fontSize || 10;
+  const fontSize = Math.round(material.fontSize || 10);
 
   ctx.save();
 

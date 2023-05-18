@@ -30,7 +30,7 @@ const app = setupApp("canvas", {
     const viewport = app.minViewport();
     const half = viewport.scale(0.5);
     armSkeleton = createArmSkeleton({
-      boneCount: 32,
+      boneCount: 24,
       boneLength: 16,
       origin: half,
     });
@@ -47,13 +47,20 @@ const app = setupApp("canvas", {
   draw: (app: IApp) => {
     if (!armSkeleton) return;
     const mouse = app.mouse;
+    const minViewport = app.minViewport();
+    const maxViewport = app.maxViewport();
+
+    const dx = minViewport.x / maxViewport.x;
+    const dy = minViewport.y / maxViewport.y;
+
+    const fontSize = 24.0 * dx;
 
     if (!mouse.pressed) {
       drawText(
         app.canvas.ctx,
-        { fontSize: 16, color: "#c8d6e5" },
+        { fontSize: fontSize, color: "#c8d6e5" },
         "Press and hold left mouse button.",
-        VEC(8 * 2, 16 * 2, 0)
+        VEC(dx * 8 * 2, dy * 16 * 2, 0)
       );
     }
 
