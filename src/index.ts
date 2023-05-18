@@ -1,38 +1,28 @@
 import "./style.css";
-
 import { setupApp, IApp } from "./app";
-import { createArmSkeleton, ISkeleton, IBone, IJoint } from "./skeleton";
-import { fabrik } from "./fabrik";
+import { createArmWithFingers, ISkeletonTree } from "./skeleton";
+import { fabrikTree } from "./fabrik";
 import { COLORS } from "./colors";
 import { Vector, VEC } from "./vector";
-import { drawLine, drawText, drawCross } from "./draw";
+import { drawSkeletonTree, drawCross, drawText } from "./draw";
 
-let armSkeleton: ISkeleton | null = null;
-
-const drawSkeleton = (app: IApp, skeleton: ISkeleton) => {
-  const { ctx } = app.canvas;
-
-  for (let i = 0; i < skeleton.bones.length; i++) {
-    const bone = skeleton.bones[i];
-    const color = COLORS[i % COLORS.length];
-
-    drawLine(
-      ctx,
-      { color: color, lineWidth: 10 },
-      bone.head.position,
-      bone.tail.position
-    );
-  }
-};
+let armSkeleton: ISkeletonTree | null = null;
 
 const app = setupApp("canvas", {
   init: (app: IApp) => {
     const viewport = app.minViewport();
     const half = viewport.scale(0.5);
-    armSkeleton = createArmSkeleton({
-      boneCount: 24,
-      boneLength: 16,
-      origin: half,
+    armSkeleton = createArmWithFingers({
+      armConfig: {
+        boneCount: 8,
+        boneLength: 60,
+        origin: half,
+      },
+      fingerCount: 5,
+      fingerConfig: {
+        boneCount: 3,
+        boneLength: 20,
+      },
     });
   },
   update: (app: IApp) => {
@@ -41,14 +31,14 @@ const app = setupApp("canvas", {
     const target: Vector = mouse.position;
 
     if (mouse.pressed) {
-      armSkeleton.bones = fabrik(armSkeleton.bones, target);
+      armSkeleton = fabrikTree(armSkeleton, target);
     }
   },
   draw: (app: IApp) => {
     if (!armSkeleton) return;
 
     // 1. Draw skeleton
-    drawSkeleton(app, armSkeleton);
+    drawSkeletonTree(app.canvas.ctx, armSkeleton);
 
     const mouse = app.mouse;
     const mousePos = mouse.position;
